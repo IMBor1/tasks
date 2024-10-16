@@ -1,4 +1,4 @@
-package com.test.tasks;
+package com.test.tasks.javaCore;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
