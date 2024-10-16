@@ -1,12 +1,28 @@
 package com.test.tasks;
 
+import java.util.Stack;
+
 public class MyStringBuilder {
     private char[] value;
     private int count;
+    private Stack<Snapshot> snapshots;
 
     public MyStringBuilder() {
         this.value = new char[16];
         this.count = 0;
+        this.snapshots = new Stack<>();
+    }
+
+    public static class Snapshot {
+        private final String state;
+
+        public Snapshot(String state) {
+            this.state = state;
+        }
+
+        public String getState() {
+            return state;
+        }
     }
 
     public MyStringBuilder append(String str) {
@@ -31,6 +47,15 @@ public class MyStringBuilder {
 
     public String toString() {
         return new String(value, 0, count);
+    }
+    public void undo() {
+        if (!snapshots.isEmpty()) {
+            Snapshot snapshot = snapshots.pop();
+            this.value = snapshot.getState().toCharArray();
+            this.count = snapshot.getState().length();
+        } else {
+            System.out.println("Nothing to undo");
+        }
     }
 }
 
