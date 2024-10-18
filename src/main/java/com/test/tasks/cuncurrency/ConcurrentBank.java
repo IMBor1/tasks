@@ -18,23 +18,23 @@ public class ConcurrentBank {
         }
     }
 
-    public synchronized void transfer(BankAccount account1, BankAccount account2, Double amount) {
-        BankAccount from = bankAccount.getAccounts().get(fromAccount);
-        BankAccount to = accounts.get(toAccount);
+    public synchronized void transfer(Integer accountId1, Integer accountId2, Long amount) {
+        BankAccount fromAccount = bankAccount.getAccounts().get(accountId1);
+        BankAccount toAccount = bankAccount.getAccounts().get(accountId2);
 
-        if (from == null || to == null) {
-            System.out.println("One of the accounts does not exist.");
+        if (fromAccount == null || toAccount == null) {
+            System.out.println("Один из аккаунтов не существует");
             return;
         }
 
-        BankAccount firstLock = from.hashCode() < to.hashCode() ? from : to;
-        BankAccount secondLock = firstLock == from ? to : from;
+        BankAccount firstLock = fromAccount.hashCode() < toAccount.hashCode() ? fromAccount : toAccount;
+        BankAccount secondLock = firstLock == fromAccount ? toAccount : fromAccount;
 
         synchronized (firstLock) {
             synchronized (secondLock) {
-                if (from.getBalance() >= amount) {
-                    from.withdraw(amount);
-                    to.deposit(amount);
+                if (fromAccount.getBalance() >= amount) {
+                    fromAccount.withdraw(fromAccount,amount);
+                    toAccount.deposit(toAccount,amount);
                     System.out.println("Transferred " + amount + " from " + fromAccount + " to " + toAccount);
                 } else {
                     System.out.println("Insufficient funds for transfer from " + fromAccount);
@@ -42,5 +42,5 @@ public class ConcurrentBank {
             }
         }
     }
-    }
+
 }
