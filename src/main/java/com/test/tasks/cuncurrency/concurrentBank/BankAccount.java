@@ -1,4 +1,4 @@
-package com.test.tasks.cuncurrency;
+package com.test.tasks.cuncurrency.concurrentBank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,6 @@ public class BankAccount {
     public void deposit(BankAccount account, long amount) {
         lock.lock();
         try {
-
             account.setBalance(account.getBalance() + amount);
         } finally {
             {

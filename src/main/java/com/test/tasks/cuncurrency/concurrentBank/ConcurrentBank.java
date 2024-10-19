@@ -1,4 +1,6 @@
-package com.test.tasks.cuncurrency;
+package com.test.tasks.cuncurrency.concurrentBank;
+
+import com.test.tasks.cuncurrency.concurrentBank.BankAccount;
 
 public class ConcurrentBank {
     private final BankAccount bankAccount;
